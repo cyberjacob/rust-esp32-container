@@ -1,17 +1,9 @@
-FROM ubuntu:latest
+FROM debian:buster-slim
 
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt update -y && apt upgrade -y
-
-## Various dependencies
-RUN apt-get install -y wget sudo cmake clang python zlib1g make git \
-	ninja-build llvm libssl-dev pkg-config curl
-
-## ESP-IDF dependencies
-## https://docs.espressif.com/projects/esp-idf/en/latest/get-started/linux-setup.html
-RUN sudo apt-get install -y git wget flex bison gperf python python-pip python-setuptools \
+RUN apt-get update && apt-get install -y wget sudo cmake clang python zlib1g make git \
+	ninja-build llvm libssl-dev pkg-config curl git wget flex bison gperf python python-pip python-setuptools \
 	python-serial python-click python-cryptography python-future python-pyparsing \
-	python-pyelftools cmake ninja-build ccache libffi-dev libssl-dev 
+	python-pyelftools cmake ninja-build ccache libffi-dev libssl-dev && rm -rf /var/lib/apt/lists/*
 
 ## Build LLVM
 ## based on these build instructions
